@@ -4,6 +4,7 @@ from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.db import models
 
 from polls.models import Choice, UserProfile
 from polls.forms import UserForm, UserProfileForm, ChoiceForm
@@ -95,8 +96,11 @@ def add_course(request):
     if request.method == 'POST':
         form = ChoiceForm(data=request.POST)
         if form.is_valid():
-            form.save()
-            return index(request)
+            if not Choice.objects.filter(new_course=request.POST['new_course']).exists():
+                form.save()
+                return index(request)
+            else:
+                print form.errors
         else:
         	print form.errors
     
