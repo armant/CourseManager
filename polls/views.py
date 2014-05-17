@@ -2,12 +2,15 @@ from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 from polls.models import Choice, UserProfile
 from polls.forms import UserForm, UserProfileForm
 #from polls.forms import UserForm
 # Create your views here.
 
+@login_required(login_url='/login/')
 def index(request):
 	course_list = Choice.objects.order_by('choice_text')
 	users = UserProfile.objects.all
@@ -15,6 +18,7 @@ def index(request):
 	context = {'course_list': course_list, "users": users, "current_user":current_user}
 	return render(request, 'polls/index.html', context)
 
+@login_required(login_url='/login/')
 def students_list(request, choice_id):
 	course = get_object_or_404(Choice, pk=choice_id)
 	return render(request, 'polls/course_enrolled.html', {'course': course})
@@ -75,3 +79,12 @@ def register(request):
             'polls/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
             context)
+
+# Use the login_required() decorator to ensure only those logged in can access the view.
+@login_required(login_url='/login/')
+def user_logout(request):
+    # Since we know the user is logged in, we can now just log them out.
+    logout(request)
+
+    # Take the user back to the homepage.
+    return HttpResponseRedirect('/login/')
