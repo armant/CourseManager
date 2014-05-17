@@ -12,7 +12,7 @@ from polls.forms import UserForm, UserProfileForm
 
 @login_required(login_url='/login/')
 def index(request):
-	course_list = Choice.objects.order_by('choice_text')
+	course_list = Choice.objects.order_by('new_course')
 	users = UserProfile.objects.all
 	current_user = request.user.username
 	context = {'course_list': course_list, "users": users, "current_user":current_user}
@@ -88,3 +88,18 @@ def user_logout(request):
 
     # Take the user back to the homepage.
     return HttpResponseRedirect('/login/')
+
+@login_required(login_url='/login/')
+def add_course(request):
+    context = RequestContext(request)
+    if request.method == 'POST':
+        form = ChoiceForm(request.POST)
+        if form.is_valid():
+        	form.save(commit=True)
+        	return index(request)
+        else:
+        	print form.errors
+    
+    else:
+    	form = ChoiceForm()
+    return render_to_response('polls/add_course.html', {'form': form}, context)

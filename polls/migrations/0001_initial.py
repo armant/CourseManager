@@ -11,8 +11,7 @@ class Migration(SchemaMigration):
         # Adding model 'Choice'
         db.create_table(u'polls_choice', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('choice_text', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('votes', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('new_course', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
         ))
         db.send_create_signal(u'polls', ['Choice'])
 
@@ -20,8 +19,6 @@ class Migration(SchemaMigration):
         db.create_table(u'polls_userprofile', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('birthday', self.gf('django.db.models.fields.DateField')()),
         ))
         db.send_create_signal(u'polls', ['UserProfile'])
@@ -74,16 +71,13 @@ class Migration(SchemaMigration):
         },
         u'polls.choice': {
             'Meta': {'object_name': 'Choice'},
-            'choice_text': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'votes': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+            'new_course': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
         u'polls.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
             'birthday': ('django.db.models.fields.DateField', [], {}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         }
     }

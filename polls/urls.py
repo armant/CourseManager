@@ -7,4 +7,5 @@ urlpatterns = patterns ('',
 	url(r'^(?P<choice_id>\d+)/$', views.students_list, name='students_list'),
 	url(r'^register/$', views.register, name='register'),
 	url(r'^logout/$', views.user_logout, name='logout'),
+	url(r'^add_course/$', views.add_course, name='add_course'),
 )
