@@ -6,7 +6,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
 from polls.models import Choice, UserProfile
-from polls.forms import UserForm, UserProfileForm
+from polls.forms import UserForm, UserProfileForm, ChoiceForm
 #from polls.forms import UserForm
 # Create your views here.
 
@@ -93,10 +93,10 @@ def user_logout(request):
 def add_course(request):
     context = RequestContext(request)
     if request.method == 'POST':
-        form = ChoiceForm(request.POST)
+        form = ChoiceForm(data=request.POST)
         if form.is_valid():
-        	form.save(commit=True)
-        	return index(request)
+            form.save()
+            return index(request)
         else:
         	print form.errors
     
