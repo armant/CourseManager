@@ -1,17 +1,18 @@
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext, loader
-from django.contrib.auth import login
+from django.contrib.auth.models import User
 
-from polls.models import Choice
+from polls.models import Choice, UserProfile
 from polls.forms import UserForm, UserProfileForm
 #from polls.forms import UserForm
 # Create your views here.
 
 def index(request):
 	course_list = Choice.objects.order_by('choice_text')
-	#template = loader.get_template('polls/index.html')
-	context = {'course_list': course_list}
+	users = UserProfile.objects.all
+	current_user = request.user.username
+	context = {'course_list': course_list, "users": users, "current_user":current_user}
 	return render(request, 'polls/index.html', context)
 
 def students_list(request, choice_id):
@@ -50,11 +51,6 @@ def register(request):
             # This delays saving the model until we're ready to avoid integrity problems.
             profile = profile_form.save(commit=False)
             profile.user = user
-
-            # Did the user provide a profile picture?
-            # If so, we need to get it from the input form and put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
 
             # Now we save the UserProfile model instance.
             profile.save()
