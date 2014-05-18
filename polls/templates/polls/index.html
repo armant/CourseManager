@@ -13,15 +13,22 @@
 {% if course_list %}
 	<ul>
 	{% for course in course_list %}
-		<li>{{ course.id }}{{ course }}<button type="button" class='buttons' id='course_button'>Join/Leave</button>
+		<li>
+			{{ course }}<button type="button" class='buttons' id='course_button'>Join/Leave</button>
 			<div id="coursemates_link">
-				<a>see coursemates</a>
+				{% if course in all_courses %}
+					<a href='{{ course.id }}'>see coursemates</a>
+				{% else %}
+					<a>see coursemates</a>
+				{% endif %}
 			</div>
 		</li>
+		
 		<script>
 			document.getElementById('course_button').id = String({{ course.id }});
 			document.getElementById('coursemates_link').id = String({{ course.id }}) + 'link';
 		</script>
+
 	{% endfor %}
 	</ul>
 {% else %}
