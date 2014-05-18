@@ -1,3 +1,9 @@
+<head>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+
+<body>
+
 {{ users }}
 
 {{ current_user }}
@@ -5,12 +11,31 @@
 {% if course_list %}
 	<ul>
 	{% for course in course_list %}
-		<li>{{ course }}</li>
+		<li>{{ course.id }}{{ course }}<button type="button" class='buttons' id='course_button'>Join/Leave</button>
+			<div id="coursemates_link">
+				<a>see coursemates</a>
+			</div>
+		</li>
+		<script>
+			document.getElementById('course_button').id = String({{ course.id }});
+			document.getElementById('coursemates_link').id = String({{ course.id }}) + 'link';
+		</script>
 	{% endfor %}
 	</ul>
 {% else %}
 	<p>No courses are added yet.</p>
 {% endif %}
 
+<script>
+	$(document).ready(function(){
+		$('.buttons').click(function() {
+			var needed_id = event.target.id
+			$('#' + needed_id + 'link').find('a').attr('href', needed_id+"/");
+		});
+	})
+</script>
+
 <a href="/courses/add_course/">Add a new course</a>
 <a href="/courses/logout/">Logout</a>
+
+</body>

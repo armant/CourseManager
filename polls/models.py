@@ -11,6 +11,7 @@ class Choice(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     birthday = models.DateField()
+    courses_taking = models.ManyToManyField(Choice)
 
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
