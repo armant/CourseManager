@@ -110,3 +110,18 @@ def add_course(request):
     else:
     	form = ChoiceForm()
     return render_to_response('polls/add_course.html', {'form': form}, context)
+
+@login_required(login_url='/login/')
+def ajax_test(request):
+    w = open('debug.txt', 'w')
+    w.write('reached the beginning of function')
+    if request.method == 'POST' and request.is_ajax():
+        match_course = request.POST.get("match_course", None)
+        if match_course is None:
+            return HttpResponse(status=400)
+        match = Choice.objects.get(id=match_course).courses_taking.add(request.user)
+        w = open('debug.txt', 'w')
+        w.write('reached the end of function')
+    
+    w.close
+    return HttpResponse(None)

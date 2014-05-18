@@ -30,8 +30,15 @@
 	$(document).ready(function(){
 		$('.buttons').click(function() {
 			var needed_id = event.target.id
-			//{{ current_user }}.{{ courses_taking }}.add(Choice(choice_id = needed_id))
 			$('#' + needed_id + 'link').find('a').attr('href', needed_id+"/");
+			$.post("/courses/ajax/",
+				{"match_course": needed_id,
+				csrfmiddlewaretoken:'{{ csrf_token }}'
+			}),
+			function(data,status){
+    		alert("Data: " + data + "\nStatus: " + status);
+  			}
+
 		});
 	})
 </script>

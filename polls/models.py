@@ -4,14 +4,15 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Choice(models.Model):
-	new_course = models.CharField(max_length=200, null=True, blank=True)
-	def __unicode__(self):
-		return self.new_course
+    new_course = models.CharField(max_length=200, null=True, blank=True)
+    courses_taking = models.ManyToManyField(User)
+    def __unicode__(self):
+        return self.new_course
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     birthday = models.DateField()
-    courses_taking = models.ManyToManyField(Choice)
+
 
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
