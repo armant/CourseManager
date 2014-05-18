@@ -13,11 +13,14 @@ from polls.forms import UserForm, UserProfileForm, ChoiceForm
 
 @login_required(login_url='/login/')
 def index(request):
-	course_list = Choice.objects.order_by('new_course')
-	users = UserProfile.objects.all
-	current_user = request.user.username
-	context = {'course_list': course_list, "users": users, "current_user":current_user}
-	return render(request, 'polls/index.html', context)
+    course_list = Choice.objects.order_by('new_course')
+    users = UserProfile.objects.all
+    if request.user.first_name + ' ' + request.user.last_name != ' ':
+        current_user = request.user.first_name + ' ' + request.user.last_name
+    else:
+        current_user = request.user.username
+    context = {'course_list': course_list, "users": users, "current_user":current_user}
+    return render(request, 'polls/index.html', context)
 
 @login_required(login_url='/login/')
 def students_list(request, choice_id):
