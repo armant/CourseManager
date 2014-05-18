@@ -1,2 +1,13 @@
 <h1>{{ course }} students list</h1>
+{% if all_students %}
+	{% for student in all_students %}
+		{{ student_name}} {{ student.first_name|add:" "|add:student.last_name }} 
+		{% if student_name == ' ' %}
+			{{ student_name }} = {{ student }}
+		{% endif %}
+		<p>{{ student_name }}</p>
+	{% endfor %}
+{% else %}
+	<p>No student is enrolled yet.</p>
+{% endif %}
 <a href="/courses/logout/">Logout</a><br />

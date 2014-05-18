@@ -15,17 +15,20 @@ from polls.forms import UserForm, UserProfileForm, ChoiceForm
 def index(request):
     course_list = Choice.objects.order_by('new_course')
     users = UserProfile.objects.all
+    all_courses = request.user.choice_set.all()
     if request.user.first_name + ' ' + request.user.last_name != ' ':
         current_user = request.user.first_name + ' ' + request.user.last_name
     else:
         current_user = request.user.username
-    context = {'course_list': course_list, "users": users, "current_user":current_user}
+    context = {'course_list': course_list, "users": users, "current_user":current_user, "all_courses":all_courses}
     return render(request, 'polls/index.html', context)
 
 @login_required(login_url='/login/')
 def students_list(request, choice_id):
-	course = get_object_or_404(Choice, pk=choice_id)
-	return render(request, 'polls/course_enrolled.html', {'course': course})
+    course = get_object_or_404(Choice, pk=choice_id)
+    all_students = course.courses_taking.all()
+    context = {'course': course, "all_students":all_students}
+    return render(request, 'polls/course_enrolled.html', context)
 
 
 
@@ -113,15 +116,9 @@ def add_course(request):
 
 @login_required(login_url='/login/')
 def ajax_test(request):
-    w = open('debug.txt', 'w')
-    w.write('reached the beginning of function')
     if request.method == 'POST' and request.is_ajax():
         match_course = request.POST.get("match_course", None)
         if match_course is None:
             return HttpResponse(status=400)
         match = Choice.objects.get(id=match_course).courses_taking.add(request.user)
-        w = open('debug.txt', 'w')
-        w.write('reached the end of function')
-    
-    w.close
     return HttpResponse(None)
