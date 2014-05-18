@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.db import models
+from django import template
 
 from polls.models import Choice, UserProfile
 from polls.forms import UserForm, UserProfileForm, ChoiceForm
@@ -119,6 +120,12 @@ def ajax_test(request):
     if request.method == 'POST' and request.is_ajax():
         match_course = request.POST.get("match_course", None)
         if match_course is None:
-            return HttpResponse(status=400)
-        match = Choice.objects.get(id=match_course).courses_taking.add(request.user)
-    return HttpResponse(None)
+            return HttpResponse(None)
+        all_courses = request.user.choice_set.all()
+        if Choice.objects.get(id=match_course) in all_courses:
+            request.user.choice_set.remove(Choice.objects.get(id=match_course))
+            data = "0"
+        else:
+            match = Choice.objects.get(id=match_course).courses_taking.add(request.user)
+            data = "1"
+    return HttpResponse(data)

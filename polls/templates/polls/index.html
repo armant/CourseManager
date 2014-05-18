@@ -39,16 +39,21 @@
 	$(document).ready(function(){
 		$('.buttons').click(function() {
 			var needed_id = event.target.id
-			$('#' + needed_id + 'link').find('a').attr('href', needed_id+"/");
 			$.post("/courses/ajax/",
 				{"match_course": needed_id,
 				csrfmiddlewaretoken:'{{ csrf_token }}'
-			}),
-			function(data,status){
-    		alert("Data: " + data + "\nStatus: " + status);
-  			}
-
-		});
+			},
+			function( data ){
+    			//alert ( data )
+    			//alert ( needed_id)
+    			if (data == "1") {
+  					$('#' + needed_id + 'link').find('a').attr('href', needed_id+"/");
+  				}
+  				else if (data == "0") {
+  					$('#' + needed_id + 'link').find('a').removeAttr('href'); //? false : true; contents().unwrap();
+  				}
+  			});
+  		})
 	})
 </script>
 
