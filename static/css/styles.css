@@ -2,7 +2,7 @@ body {
     background-image: url(../img/background.png) !important;
     padding-top: 70px;
     color: #860000;
-    font-family: Georgia, Cambria;
+    font-family: Georgia, Cambria !important;
 }
 .navbar {
     background-image: url(../img/background.png);
@@ -13,7 +13,9 @@ body {
 #title {
     margin-top: 0px;
     color: #860000;
-    font-family: Georgia;
+    font-family: Georgia, Cambria;
+    font-size: 36px;
+    font-weight:normal;
 }
 
 .top_bar {
@@ -47,4 +49,29 @@ a, a:hover {
 
 .add_course_body {
     height: 100%;
+}
+
+#header {
+    background: #860000 !important;
+}
+
+#branding h1 {
+    color: #f0ebeb !important;
+    font-family: Georgia, Cambria;
+}
+
+.login .form-row label {
+    color: #860000 !important;
+}
+
+input, textarea, select, .form-row p {
+    font-family: Georgia, Cambria !important;
+}
+
+.button input[type=submit], input[type=button], .submit-row input {
+    background: #860000 !important;
+    color: #f0ebeb !important;
+}
+#reg_link {
+    text-decoration: underline;
 }
