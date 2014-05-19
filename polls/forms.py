@@ -16,7 +16,7 @@ class UserProfileForm(forms.ModelForm):
 
 
 class ChoiceForm(forms.ModelForm):
-    new_course = forms.CharField(max_length=200, help_text="Please enter the new course name.")
+    new_course = forms.CharField(max_length=200, help_text="Please enter the new course name:")
 
     class Meta:
         # Provide an association between the ModelForm and a model

@@ -1,0 +1,50 @@
+body {
+    background-image: url(../img/background.png) !important;
+    padding-top: 70px;
+    color: #860000;
+    font-family: Georgia, Cambria;
+}
+.navbar {
+    background-image: url(../img/background.png);
+    border-width: 0px;
+    min-height: 50px;
+}
+
+#title {
+    margin-top: 0px;
+    color: #860000;
+    font-family: Georgia;
+}
+
+.top_bar {
+    color: #860000 !important;
+}
+
+.top_bar:hover {
+    text-decoration: underline !important;
+}
+
+.inactive {
+    color: #777 !important;
+}
+
+.navbar-right {
+    margin-top: 10px;
+}
+
+a, a:hover {
+    color: #860000;
+}
+#already_exists {
+    margin-top: 50px;
+}
+
+#course_adding {
+    position: relative;
+	top: 30%;
+	transform: 			translateY(-50%);
+}
+
+.add_course_body {
+    height: 100%;
+}

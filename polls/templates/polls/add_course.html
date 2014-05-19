@@ -1,13 +1,42 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Add a course</title>
-    </head>
+<html class="add_course_body">
+<head>
+	{% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
+	<!--<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">-->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <title>Add a course</title>
+</head>
 
-    <body>
-        <h1>Add a course</h1>
+<body class="add_course_body">
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand"><h2 id='title'>Add a course</h2></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="inactive">Hi, {{ user_first_name }}</a></li>
+            <li><a class="top_bar" href="/courses/">Course list</a></li>
+            <li><a href="/courses/logout/">Logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
 
-        <form id="ChoiceForm" method="post" action="/courses/add_course/">
+    <div class="container" id="course_adding">
+
+
+<div><center><form id="ChoiceForm" method="post" action="/courses/add_course/">
 
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
@@ -20,8 +49,16 @@
                 {{ field }}
             {% endfor %}
 
-            <input type="submit" name="submit" value="Create course" />
-        </form>
-    </body>
+            <input type="submit" name="submit" value="Create a course" />
+        </form></center></div>
+<div id="already_exists"><center>{{ message }}</center></div>
+    </div> <!-- /container -->
 
+
+
+
+<script src="http://code.jquery.com/jquery.js"></script>
+{% load staticfiles %}
+<script type="text/javascript" href="{% static "js/bootstrap.min.js" %}"></script>
+</body>
 </html>

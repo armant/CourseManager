@@ -21,14 +21,23 @@ def index(request):
         current_user = request.user.first_name + ' ' + request.user.last_name
     else:
         current_user = request.user.username
-    context = {'course_list': course_list, "users": users, "current_user":current_user, "all_courses":all_courses}
+    if request.user.first_name != '':
+        user_first_name = request.user.first_name
+    else:
+        user_first_name = request.user.username
+        
+    context = {'course_list': course_list, "users": users, "current_user":current_user, "all_courses":all_courses, "user_first_name":user_first_name}
     return render(request, 'polls/index.html', context)
 
 @login_required(login_url='/login/')
 def students_list(request, choice_id):
     course = get_object_or_404(Choice, pk=choice_id)
     all_students = course.courses_taking.all()
-    context = {'course': course, "all_students":all_students}
+    if request.user.first_name != '':
+        user_first_name = request.user.first_name
+    else:
+        user_first_name = request.user.username
+    context = {'course': course, "all_students":all_students, "user_first_name":user_first_name}
     return render(request, 'polls/course_enrolled.html', context)
 
 
@@ -99,7 +108,12 @@ def user_logout(request):
 
 @login_required(login_url='/login/')
 def add_course(request):
+    if request.user.first_name != '':
+        user_first_name = request.user.first_name
+    else:
+        user_first_name = request.user.username
     context = RequestContext(request)
+    message = ""
     if request.method == 'POST':
         form = ChoiceForm(data=request.POST)
         if form.is_valid():
@@ -107,13 +121,13 @@ def add_course(request):
                 form.save()
                 return index(request)
             else:
-                print form.errors
+                message = "Sorry, this course already exists in the list."
         else:
         	print form.errors
     
     else:
     	form = ChoiceForm()
-    return render_to_response('polls/add_course.html', {'form': form}, context)
+    return render_to_response('polls/add_course.html', {'form': form, 'user_first_name': user_first_name, 'message': message, }, context)
 
 @login_required(login_url='/login/')
 def ajax_test(request):
