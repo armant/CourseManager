@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, render_to_response
+from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
@@ -143,3 +143,9 @@ def ajax_test(request):
             match = Choice.objects.get(id=match_course).courses_taking.add(request.user)
             data = "1"
     return HttpResponse(data)
+
+def home_page(request):
+    if request.user.is_authenticated():
+        return redirect('index')
+    else:
+        return redirect('django.contrib.auth.views.login')
