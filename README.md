@@ -1,11 +1,9 @@
 Course Manager
-=============
+==============
 
-CourseManager is a web based application that is built using Python, Django, JavaScript, jQuery, Bootstrap, HTML and CSS.
+Course Manager is a web based application that is built using Python, Django, JavaScript, jQuery, Bootstrap, HTML and CSS.
 
-This site is entirely student run and managed and every student can create new courses and join an existing course. To keep
-things simple there is no concept of semesters or schedules. Courses are universal and anyone who joins a course can see all
-the the other people who have ever joined that course.
+Every student can create new courses and join an existing course. Courses are universal and anyone who joins a course can see all the the other people who have ever joined that course.
 
 Specifically, the following user scenarios are enabled:
 
